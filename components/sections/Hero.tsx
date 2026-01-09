@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Avatar } from '@/components/ui/Avatar'
 import { designTokens } from '@/theme/muiTheme'
-import { OWNER_NAME, OWNER_TITLE, OWNER_SUMMARY } from '@/lib/constants'
+import { OWNER_NAME } from '@/lib/constants'
 
 export function Hero() {
   return (
@@ -30,17 +30,34 @@ export function Hero() {
             animation: 'slide-up 0.8s ease-out',
           }}
         >
-          {/* Avatar */}
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Avatar
-              size="xl"
-              src="/avatar.png"
-              alt={OWNER_NAME}
-              initials={OWNER_NAME.substring(0, 2).toUpperCase()}
-            />
+          {/* Avatar with Gradient Background */}
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              justifyContent: 'center',
+              position: 'relative',
+            }}
+          >
+            <Box
+              className="gradient-bg"
+              sx={{
+                position: 'relative',
+                display: 'inline-block',
+                borderRadius: '50%',
+                padding: '8px',
+              }}
+            >
+              <Avatar
+                size="xl"
+                src="/images/avatar.png"
+                alt={OWNER_NAME}
+                initials={OWNER_NAME.substring(0, 2).toUpperCase()}
+                withBorder={false}
+              />
+            </Box>
           </Box>
 
-          {/* Headline */}
+          {/* Headline with Gradient Text */}
           <Box>
             <Typography
               component="h1"
@@ -49,31 +66,19 @@ export function Hero() {
                 color: designTokens.colors.primaryText,
                 fontWeight: 700,
                 mb: 2,
+                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                lineHeight: 1.2,
               }}
             >
-              {OWNER_NAME}
-            </Typography>
-            <Typography
-              variant="h3"
-              sx={{
-                color: designTokens.colors.primaryText,
-                fontWeight: 600,
-                mb: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 1,
-              }}
-            >
-              <span>Full-Stack Software Engineer</span>
+              I do code and make content{' '}
               <Box
                 component="span"
+                className="gradient-text"
                 sx={{
-                  color: designTokens.colors.accentHighlight,
                   fontWeight: 700,
                 }}
               >
-                (Backend-Focused)
+                about it!
               </Box>
             </Typography>
           </Box>
@@ -82,14 +87,14 @@ export function Hero() {
           <Typography
             variant="body1"
             sx={{
-              color: designTokens.colors.secondaryText,
-              fontSize: '1.1rem',
+              color: designTokens.colors.primaryText,
+              fontSize: { xs: '1rem', md: '1.1rem' },
               lineHeight: 1.8,
-              maxWidth: '600px',
+              maxWidth: '700px',
               margin: '0 auto',
             }}
           >
-            {OWNER_SUMMARY}
+            I am a seasoned full-stack software engineer with over 8 years of professional experience, specializing in backend development. My expertise lies in crafting robust and scalable SaaS-based architectures on the Amazon AWS platform.
           </Typography>
 
           {/* CTAs */}
@@ -110,6 +115,12 @@ export function Hero() {
                   minWidth: { xs: '100%', sm: 'auto' },
                   px: { xs: 3, sm: 4 },
                   py: 1.5,
+                  backgroundColor: designTokens.colors.ctaPrimaryBg,
+                  color: designTokens.colors.ctaPrimaryText,
+                  fontWeight: 600,
+                  '&:hover': {
+                    backgroundColor: '#F0F0F0',
+                  },
                 }}
               >
                 Get In Touch
@@ -122,6 +133,14 @@ export function Hero() {
                 minWidth: { xs: '100%', sm: 'auto' },
                 px: { xs: 3, sm: 4 },
                 py: 1.5,
+                backgroundColor: designTokens.colors.backgroundPrimary,
+                color: designTokens.colors.primaryText,
+                border: `2px solid ${designTokens.colors.primaryText}`,
+                fontWeight: 600,
+                '&:hover': {
+                  backgroundColor: designTokens.colors.backgroundSecondary,
+                  borderColor: designTokens.colors.primaryText,
+                },
               }}
               onClick={() => {
                 // Download CV - placeholder for now

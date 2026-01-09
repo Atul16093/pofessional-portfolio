@@ -71,11 +71,13 @@ export function ProjectHighlights() {
               component="h2"
               variant="h2"
               sx={{
-                color: designTokens.colors.primaryText,
+                color: designTokens.colors.projectsHeading,
                 fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
               }}
             >
-              Featured Projects
+              Projects
             </Typography>
             <Typography
               variant="body1"

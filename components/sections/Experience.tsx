@@ -72,8 +72,10 @@ export function Experience() {
               component="h2"
               variant="h2"
               sx={{
-                color: designTokens.colors.primaryText,
+                color: designTokens.colors.experienceHeading,
                 fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
               }}
             >
               Experience

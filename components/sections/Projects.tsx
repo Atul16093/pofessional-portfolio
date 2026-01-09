@@ -90,9 +90,11 @@ export function ProjectsSection({ limit, showFeaturedOnly = false }: ProjectsSec
               component="h2"
               variant="h2"
               sx={{
-                color: designTokens.colors.primaryText,
+                color: designTokens.colors.projectsHeading,
                 fontWeight: 700,
                 mb: 2,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
               }}
             >
               Projects

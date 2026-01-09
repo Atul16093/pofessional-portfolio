@@ -3,8 +3,9 @@ import { Footer } from '@/components/layout/Footer'
 import { ProjectsSection } from '@/components/sections/Projects'
 import { Container, Box, Typography } from '@mui/material'
 import { designTokens } from '@/theme/muiTheme'
+import type { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Projects | Full-Stack Software Engineer',
   description: 'Explore my recent projects and case studies showcasing scalable backend systems and technical solutions.',
 }

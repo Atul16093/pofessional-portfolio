@@ -9,6 +9,7 @@ export const OWNER_SUMMARY = 'Building scalable backend systems, real-time infra
 // Navigation
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
   { label: 'Projects', href: '/projects' },
   { label: 'Contact', href: '/contact' },
 ]

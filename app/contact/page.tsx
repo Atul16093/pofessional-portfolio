@@ -3,8 +3,9 @@ import { Footer } from '@/components/layout/Footer'
 import { ContactForm } from '@/components/sections/ContactForm'
 import { Box } from '@mui/material'
 import { designTokens } from '@/theme/muiTheme'
+import type { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Contact | Full-Stack Software Engineer',
   description: 'Get in touch with me for project inquiries, collaborations, or to discuss backend systems and architecture.',
 }

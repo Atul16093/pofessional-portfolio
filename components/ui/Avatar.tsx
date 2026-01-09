@@ -36,6 +36,8 @@ export const Avatar: React.FC<AvatarProps> = ({
         width: dimension,
         height: dimension,
         borderRadius: '50%',
+        backgroundColor: designTokens.colors.backgroundPrimary,
+        padding: '4px',
         ...(withBorder && {
           border: `3px solid ${designTokens.colors.accentHighlight}`,
           boxShadow: `0 0 0 1px ${designTokens.colors.backgroundSecondary}`,
