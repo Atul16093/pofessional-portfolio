@@ -99,7 +99,7 @@ export function Experience() {
                 sx={{
                   backgroundColor: designTokens.colors.cardBackground,
                   border: `1px solid ${designTokens.colors.borderDivider}`,
-                  borderRadius: designTokens.radius.lg,
+                  borderRadius: designTokens.radius.md,
                   transition: 'all 0.3s ease',
                   '&:hover': {
                     borderColor: designTokens.colors.accentHighlight,

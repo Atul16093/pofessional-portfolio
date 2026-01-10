@@ -41,15 +41,20 @@ export function Hero() {
             <Box
               className="gradient-bg"
               sx={{
+                background: 'linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%)',
                 position: 'relative',
                 display: 'inline-block',
                 borderRadius: '50%',
-                padding: '8px',
               }}
             >
               <Avatar
                 size="xl"
-                src="/images/avatar.png"
+                sx={{
+                  background: 'linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%)',
+                  width: '100%',
+                  height: '100%',
+                }}
+                src="/images/avatar.svg"
                 alt={OWNER_NAME}
                 initials={OWNER_NAME.substring(0, 2).toUpperCase()}
                 withBorder={false}
@@ -70,7 +75,7 @@ export function Hero() {
                 lineHeight: 1.2,
               }}
             >
-              I do code and make content{' '}
+              Full-Stack Software Engineer {' '}
               <Box
                 component="span"
                 className="gradient-text"
@@ -78,7 +83,7 @@ export function Hero() {
                   fontWeight: 700,
                 }}
               >
-                about it!
+               Backend-Focused
               </Box>
             </Typography>
           </Box>

@@ -313,7 +313,7 @@ export function ContactForm() {
             sx={{
               backgroundColor: designTokens.colors.cardBackground,
               border: `1px solid ${designTokens.colors.borderDivider}`,
-              borderRadius: designTokens.radius.lg,
+              borderRadius: designTokens.radius.md,
               p: { xs: 3, md: 4 },
               textAlign: 'center',
             }}

@@ -105,7 +105,7 @@ export function ProjectsSection({ limit, showFeaturedOnly = false }: ProjectsSec
                 color: designTokens.colors.secondaryText,
               }}
             >
-              Building scalable systems that matter. Max 3 projects showcasing backend and system design expertise.
+              Building scalable systems that matter. Showcasing backend and system design expertise.
             </Typography>
           </Box>
 
@@ -115,18 +115,29 @@ export function ProjectsSection({ limit, showFeaturedOnly = false }: ProjectsSec
               display: 'grid',
               gridTemplateColumns: {
                 xs: '1fr',
-                md: projects.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+                md: projects.length === 1 ? '1fr' : projects.length === 2 ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(350px, 1fr))',
               },
-              gap: designTokens.spacing.md,
+              gap: { xs: 3, md: 4 },
+              maxWidth: '1400px',
+              mx: 'auto',
             }}
           >
             {projects.map((project) => (
-              <ProjectCard
+              <Box
                 key={project.id}
-                project={project}
-                variant="full"
-                showFeatured
-              />
+                sx={{
+                  display: 'flex',
+                  '& .project-card': {
+                    width: '100%',
+                  },
+                }}
+              >
+                <ProjectCard
+                  project={project}
+                  variant="full"
+                  showFeatured
+                />
+              </Box>
             ))}
           </Box>
 

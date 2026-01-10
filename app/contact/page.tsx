@@ -1,8 +1,6 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { ContactForm } from '@/components/sections/ContactForm'
-import { Box } from '@mui/material'
-import { designTokens } from '@/theme/muiTheme'
+import { ContactPageContent } from '@/components/pages/ContactPageContent'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -14,11 +12,7 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main>
-        <Box sx={{ backgroundColor: designTokens.colors.backgroundPrimary, minHeight: '100vh' }}>
-          <ContactForm />
-        </Box>
-      </main>
+      <ContactPageContent />
       <Footer />
     </>
   )

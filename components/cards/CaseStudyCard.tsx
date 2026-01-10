@@ -172,7 +172,7 @@ export function CaseStudyCard({ caseStudy, isLoading }: CaseStudyCardProps) {
                   position: 'relative',
                   width: '100%',
                   height: '400px',
-                  borderRadius: designTokens.radius.lg,
+                  borderRadius: designTokens.radius.md,
                   overflow: 'hidden',
                   border: `1px solid ${designTokens.colors.borderDivider}`,
                 }}
@@ -195,7 +195,7 @@ export function CaseStudyCard({ caseStudy, isLoading }: CaseStudyCardProps) {
                 sx={{
                   backgroundColor: designTokens.colors.cardBackground,
                   border: `2px solid ${designTokens.colors.accentHighlight}`,
-                  borderRadius: designTokens.radius.lg,
+                  borderRadius: designTokens.radius.md,
                   p: { xs: 3, md: 4 },
                 }}
               >
@@ -242,7 +242,7 @@ export function CaseStudyCard({ caseStudy, isLoading }: CaseStudyCardProps) {
                       position: 'relative',
                       width: '100%',
                       height: '500px',
-                      borderRadius: designTokens.radius.lg,
+                      borderRadius: designTokens.radius.md,
                       overflow: 'hidden',
                       border: `1px solid ${designTokens.colors.borderDivider}`,
                       mb: 3,

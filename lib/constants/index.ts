@@ -2,7 +2,7 @@
 export const APP_NAME = 'Portfolio'
 
 // Owner Information
-export const OWNER_NAME = 'Atul'
+export const OWNER_NAME = 'Atul Raghuwanshi'
 export const OWNER_TITLE = 'Full-Stack Software Engineer (Backend-Focused)'
 export const OWNER_SUMMARY = 'Building scalable backend systems, real-time infrastructure, and performant solutions.'
 

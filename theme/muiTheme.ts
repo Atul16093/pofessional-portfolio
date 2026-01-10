@@ -7,10 +7,10 @@ const colors = {
   cardBackground: '#1C1C1C',
   primaryText: '#FFFFFF',
   secondaryText: '#B3B3B3',
-  accentHighlight: '#FF4D8D',
+  accentHighlight: '#ff4d8d',
   projectsHeading: '#FF6B35', // Orange color for Projects heading (matching image)
   experienceHeading: '#4A90E2', // Blue color for Experience heading (matching image)
-  gradientPink: '#FF4D8D',
+  gradientPink: '#ff4d8d',
   gradientPurple: '#9B59B6',
   gradientBlue: '#4A90E2',
   ctaPrimaryBg: '#FFFFFF',
@@ -222,8 +222,8 @@ export const designTokens = {
     '2xl': 64,
   },
   radius: {
-    sm: 6,
-    md: 8,
+    sm: 2,
+    md: 4,
     lg: 10,
     xl: 12,
   },

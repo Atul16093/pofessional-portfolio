@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
@@ -10,24 +10,37 @@ import {
   List,
   ListItem,
   IconButton,
-  useMediaQuery,
-  useTheme,
+  Avatar,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { designTokens } from '@/theme/muiTheme'
-import { NAV_LINKS } from '@/lib/constants'
+import { NAV_LINKS, OWNER_NAME, CTA_PRIMARY } from '@/lib/constants'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const router = useRouter()
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 900)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
+  }
+
+  const handleGetInTouch = () => {
+    router.push('/contact')
   }
 
   const isActive = (href: string) => {
@@ -96,47 +109,110 @@ export function Header() {
             px: 2,
           }}
         >
-          {/* Logo/Brand */}
+          {/* Logo/Brand with Name */}
           <Link href="/" passHref legacyBehavior>
-            <Typography
+            <Box
               component="a"
-              variant="h6"
               sx={{
-                fontWeight: 700,
-                color: designTokens.colors.accentHighlight,
-                fontSize: '1.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                textDecoration: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  opacity: 0.8,
+                  opacity: 0.9,
                 },
               }}
             >
-              ∆
-            </Typography>
+              <Avatar
+                sx={{
+                  width: 40,
+                  height: 40,
+                  bgcolor: designTokens.colors.accentHighlight,
+                  color: designTokens.colors.primaryText,
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                }}
+              >
+                {OWNER_NAME.charAt(0).toUpperCase()}
+              </Avatar>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  color: designTokens.colors.primaryText,
+                  fontSize: '1.25rem',
+                }}
+              >
+                {OWNER_NAME}
+              </Typography>
+            </Box>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation and CTA */}
           {!isMobile && (
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              {navContent}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                {navContent}
+              </Box>
+              <MuiButton
+                variant="contained"
+                onClick={handleGetInTouch}
+                sx={{
+                  backgroundColor: designTokens.colors.accentHighlight,
+                  color: designTokens.colors.primaryText,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  px: 3,
+                  py: 1,
+                  borderRadius: 2,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: '#E63B7C',
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 4px 12px rgba(255, 77, 141, 0.4)`,
+                  },
+                }}
+              >
+                {CTA_PRIMARY}
+              </MuiButton>
             </Box>
           )}
 
           {/* Mobile Menu Button */}
           {isMobile && (
-            <IconButton
-              color="inherit"
-              onClick={handleDrawerToggle}
-              sx={{
-                color: designTokens.colors.primaryText,
-                '&:hover': {
-                  backgroundColor: designTokens.colors.backgroundSecondary,
-                },
-              }}
-            >
-              {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-            </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <MuiButton
+                variant="contained"
+                onClick={handleGetInTouch}
+                size="small"
+                sx={{
+                  backgroundColor: designTokens.colors.accentHighlight,
+                  color: designTokens.colors.primaryText,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  px: 2,
+                  py: 0.5,
+                  fontSize: '0.875rem',
+                  display: { xs: 'none', sm: 'flex' },
+                }}
+              >
+                {CTA_PRIMARY}
+              </MuiButton>
+              <IconButton
+                color="inherit"
+                onClick={handleDrawerToggle}
+                sx={{
+                  color: designTokens.colors.primaryText,
+                  '&:hover': {
+                    backgroundColor: designTokens.colors.backgroundSecondary,
+                  },
+                }}
+              >
+                {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+              </IconButton>
+            </Box>
           )}
 
           {/* Mobile Drawer */}
@@ -153,6 +229,25 @@ export function Header() {
           >
             <Box sx={{ p: 2 }}>
               {navContent}
+              <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
+                <MuiButton
+                  variant="contained"
+                  onClick={() => {
+                    handleGetInTouch()
+                    handleDrawerToggle()
+                  }}
+                  fullWidth
+                  sx={{
+                    backgroundColor: designTokens.colors.accentHighlight,
+                    color: designTokens.colors.primaryText,
+                    fontWeight: 600,
+                    textTransform: 'none',
+                    py: 1.5,
+                  }}
+                >
+                  {CTA_PRIMARY}
+                </MuiButton>
+              </Box>
             </Box>
           </Drawer>
         </Box>
