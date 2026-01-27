@@ -46,12 +46,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff4d8d;
+  background: linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%);
 }
 
 /* Selection styling */
 ::selection {
-  background-color: #ff4d8d;
+  background: linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%);
   color: #ffffff;
 }
 
@@ -62,7 +62,7 @@ a {
 }
 
 a:focus-visible {
-  outline: 2px solid #ff4d8d;
+  outline: 2px solid #F36B7F;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -70,7 +70,7 @@ a:focus-visible {
 /* Focus visible for better accessibility */
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #ff4d8d;
+  outline: 2px solid #F36B7F;
   outline-offset: 2px;
 }
 
@@ -116,7 +116,7 @@ a:focus-visible {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ff4d8d, #9b59b6, #4a90e2);
+  background: linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -125,7 +125,7 @@ a:focus-visible {
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #ff4d8d, #9b59b6, #4a90e2);
+  background: linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%);
   background-size: 200% 200%;
   animation: gradient-shift 3s ease infinite;
 }

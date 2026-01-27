@@ -129,7 +129,7 @@ export function Header() {
                 sx={{
                   width: 40,
                   height: 40,
-                  bgcolor: designTokens.colors.accentHighlight,
+                  background: designTokens.colors.primaryGradient,
                   color: designTokens.colors.primaryText,
                   fontWeight: 700,
                   fontSize: '1.1rem',
@@ -160,7 +160,7 @@ export function Header() {
                 variant="contained"
                 onClick={handleGetInTouch}
                 sx={{
-                  backgroundColor: designTokens.colors.accentHighlight,
+                  background: designTokens.colors.primaryGradient,
                   color: designTokens.colors.primaryText,
                   fontWeight: 600,
                   textTransform: 'none',
@@ -169,9 +169,11 @@ export function Header() {
                   borderRadius: 2,
                   transition: 'all 0.3s ease',
                   '&:hover': {
-                    backgroundColor: '#E63B7C',
+                    background: designTokens.colors.primaryGradient,
+                    opacity: 0.9,
+                    filter: 'brightness(1.1)',
                     transform: 'translateY(-2px)',
-                    boxShadow: `0 4px 12px rgba(255, 77, 141, 0.4)`,
+                    boxShadow: `0 4px 12px rgba(243, 107, 127, 0.4)`,
                   },
                 }}
               >
@@ -188,7 +190,7 @@ export function Header() {
                 onClick={handleGetInTouch}
                 size="small"
                 sx={{
-                  backgroundColor: designTokens.colors.accentHighlight,
+                  background: designTokens.colors.primaryGradient,
                   color: designTokens.colors.primaryText,
                   fontWeight: 600,
                   textTransform: 'none',
@@ -196,6 +198,11 @@ export function Header() {
                   py: 0.5,
                   fontSize: '0.875rem',
                   display: { xs: 'none', sm: 'flex' },
+                  '&:hover': {
+                    background: designTokens.colors.primaryGradient,
+                    opacity: 0.9,
+                    filter: 'brightness(1.1)',
+                  },
                 }}
               >
                 {CTA_PRIMARY}
@@ -238,11 +245,16 @@ export function Header() {
                   }}
                   fullWidth
                   sx={{
-                    backgroundColor: designTokens.colors.accentHighlight,
+                    background: designTokens.colors.primaryGradient,
                     color: designTokens.colors.primaryText,
                     fontWeight: 600,
                     textTransform: 'none',
                     py: 1.5,
+                    '&:hover': {
+                      background: designTokens.colors.primaryGradient,
+                      opacity: 0.9,
+                      filter: 'brightness(1.1)',
+                    },
                   }}
                 >
                   {CTA_PRIMARY}

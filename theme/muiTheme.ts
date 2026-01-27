@@ -7,12 +7,13 @@ const colors = {
   cardBackground: '#1C1C1C',
   primaryText: '#FFFFFF',
   secondaryText: '#B3B3B3',
-  accentHighlight: '#ff4d8d',
+  accentHighlight: '#F36B7F', // Starting color from gradient
   projectsHeading: '#FF6B35', // Orange color for Projects heading (matching image)
   experienceHeading: '#4A90E2', // Blue color for Experience heading (matching image)
-  gradientPink: '#ff4d8d',
-  gradientPurple: '#9B59B6',
-  gradientBlue: '#4A90E2',
+  gradientPink: '#F36B7F',
+  gradientPurple: '#8B3FE4',
+  // Main theme gradient
+  primaryGradient: 'linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%)',
   ctaPrimaryBg: '#FFFFFF',
   ctaPrimaryText: '#0F0F0F',
   borderDivider: '#2A2A2A',
@@ -142,10 +143,12 @@ export const muiTheme = createTheme({
           },
         },
         contained: {
-          backgroundColor: colors.accentHighlight,
+          background: colors.primaryGradient,
           color: colors.primaryText,
           '&:hover': {
-            backgroundColor: '#E63B7C',
+            background: colors.primaryGradient,
+            opacity: 0.9,
+            filter: 'brightness(1.1)',
           },
         },
         outlined: {
@@ -169,7 +172,7 @@ export const muiTheme = createTheme({
           '&:hover': {
             borderColor: colors.accentHighlight,
             transform: 'translateY(-4px)',
-            boxShadow: `0 12px 40px rgba(255, 77, 141, 0.15)`,
+            boxShadow: `0 12px 40px rgba(243, 107, 127, 0.25)`,
           },
         },
       },
@@ -198,7 +201,8 @@ export const muiTheme = createTheme({
               borderColor: colors.accentHighlight,
             },
             '&.Mui-focused fieldset': {
-              borderColor: colors.accentHighlight,
+              borderImage: `${colors.primaryGradient} 1`,
+              borderImageSlice: 1,
             },
           },
           '& .MuiInputBase-input::placeholder': {
@@ -232,6 +236,6 @@ export const designTokens = {
     md: `0 4px 6px rgba(0, 0, 0, 0.1)`,
     lg: `0 10px 25px rgba(0, 0, 0, 0.2)`,
     xl: `0 20px 50px rgba(0, 0, 0, 0.3)`,
-    accent: `0 12px 40px rgba(255, 77, 141, 0.15)`,
+    accent: `0 12px 40px rgba(243, 107, 127, 0.25)`,
   },
 }

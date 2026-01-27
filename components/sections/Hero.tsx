@@ -41,7 +41,7 @@ export function Hero() {
             <Box
               className="gradient-bg"
               sx={{
-                background: 'linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%)',
+                background: designTokens.colors.primaryGradient,
                 position: 'relative',
                 display: 'inline-block',
                 borderRadius: '50%',
@@ -50,7 +50,7 @@ export function Hero() {
               <Avatar
                 size="xl"
                 sx={{
-                  background: 'linear-gradient(135deg, #F36B7F 0%, #8B3FE4 100%)',
+                  background: designTokens.colors.primaryGradient,
                   width: '100%',
                   height: '100%',
                 }}

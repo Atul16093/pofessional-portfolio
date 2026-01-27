@@ -40,13 +40,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         variant={muiVariant}
         disabled={disabled || isLoading}
         sx={{
-          backgroundColor:
-            variant === 'primary' ? designTokens.colors.accentHighlight : undefined,
-          color: variant === 'primary' ? designTokens.colors.primaryText : undefined,
-          '&:hover': {
-            backgroundColor:
-              variant === 'primary' ? '#E63B7C' : undefined,
-          },
+          ...(variant === 'primary' && {
+            background: designTokens.colors.primaryGradient,
+            color: designTokens.colors.primaryText,
+            '&:hover': {
+              background: designTokens.colors.primaryGradient,
+              opacity: 0.9,
+              filter: 'brightness(1.1)',
+            },
+          }),
         }}
         {...props}
       >

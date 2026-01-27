@@ -97,7 +97,7 @@ export function ProjectsSection({ limit, showFeaturedOnly = false }: ProjectsSec
                 letterSpacing: '0.1em',
               }}
             >
-              Projects
+              All Projects
             </Typography>
             <Typography
               variant="body1"

@@ -8,7 +8,7 @@ export function ProjectsPageContent() {
   return (
     <main>
       {/* Hero Section for Projects Page */}
-      <Box
+{/*       <Box
         sx={{
           backgroundColor: designTokens.colors.backgroundPrimary,
           py: { xs: 6, md: 8 },
@@ -40,7 +40,7 @@ export function ProjectsPageContent() {
             Scalable backend systems, system design, and real-time infrastructure
           </Typography>
         </Container>
-      </Box>
+      </Box> */}
 
       {/* Projects List */}
       <Box sx={{ backgroundColor: designTokens.colors.backgroundPrimary }}>
