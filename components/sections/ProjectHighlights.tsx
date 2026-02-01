@@ -1,56 +1,23 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { Box, Typography, Stack, Container, CircularProgress } from '@mui/material'
+import React from 'react'
+import { Box, Typography, Stack, Container } from '@mui/material'
 import Link from 'next/link'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { designTokens } from '@/theme/muiTheme'
 import { Project } from '@/lib/types'
-import { projectsAPI } from '@/lib/api'
 
-export function ProjectHighlights() {
-  const [projects, setProjects] = useState<Project[]>([])
-  const [loading, setLoading] = useState(true)
+interface ProjectHighlightsProps {
+  projects: Project[]
+}
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const data = await projectsAPI.getAll()
-        // Show only featured projects or first 3
-        const highlighted = data
-          .filter((p) => p.featured)
-          .slice(0, 3)
-        setProjects(highlighted)
-      } catch (error) {
-        console.error('Failed to fetch projects:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+export function ProjectHighlights({ projects }: ProjectHighlightsProps) {
+  // Filter featured and slice top 3
+  const highlighted = projects
+    .filter((p) => p.featured)
+    .slice(0, 3)
 
-    fetchProjects()
-  }, [])
-
-  if (loading) {
-    return (
-      <Box
-        component="section"
-        sx={{
-          backgroundColor: designTokens.colors.backgroundSecondary,
-          py: { xs: 6, md: 8 },
-          px: { xs: 2, md: 3 },
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '300px',
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    )
-  }
-
-  if (projects.length === 0) {
+  if (highlighted.length === 0) {
     return null
   }
 
@@ -96,14 +63,14 @@ export function ProjectHighlights() {
               display: 'grid',
               gridTemplateColumns: {
                 xs: '1fr',
-                md: projects.length === 1 ? '1fr' : projects.length === 2 ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(350px, 1fr))',
+                md: highlighted.length === 1 ? '1fr' : highlighted.length === 2 ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(350px, 1fr))',
               },
               gap: { xs: 3, md: 4 },
               maxWidth: '1400px',
               mx: 'auto',
             }}
           >
-            {projects.map((project) => (
+            {highlighted.map((project) => (
               <Box
                 key={project.id}
                 sx={{

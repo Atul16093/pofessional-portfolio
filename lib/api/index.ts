@@ -1,6 +1,14 @@
-import { Project, CaseStudy, Experience, TechStackItem, ContactFormData, ContactResponse } from '@/lib/types'
+import {
+  Project,
+  CaseStudy,
+  Experience,
+  TechStackItem,
+  ContactFormData,
+  ContactResponse,
+  SiteConfig
+} from '@/lib/types'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000'
 
 // Helper to handle API requests
 async function apiCall<T>(
@@ -23,60 +31,67 @@ async function apiCall<T>(
   return response.json()
 }
 
-// Projects API
-export const projectsAPI = {
-  getAll: async (): Promise<Project[]> => {
-    return apiCall<Project[]>('/api/projects')
-  },
+// Site Config API
+export const getSiteConfig = async (): Promise<SiteConfig> => {
+  return apiCall<SiteConfig>('/api/public/site-config', {
+    next: { revalidate: 1800 } // 30 mins
+  })
+}
 
-  getBySlug: async (slug: string): Promise<CaseStudy> => {
-    return apiCall<CaseStudy>(`/api/projects/${slug}`)
-  },
+// Projects API
+export const getProjects = async (): Promise<Project[]> => {
+  return apiCall<Project[]>('/api/public/projects', {
+    next: { revalidate: 300 } // 5 mins
+  })
+}
+
+export const getProjectBySlug = async (slug: string): Promise<CaseStudy> => {
+  return apiCall<CaseStudy>(`/api/public/projects/${slug}`, {
+    next: { revalidate: 1800 } // 30 mins
+  })
 }
 
 // Experience API
-export const experienceAPI = {
-  getAll: async (): Promise<Experience[]> => {
-    return apiCall<Experience[]>('/api/experience')
-  },
+export const getExperience = async (): Promise<Experience[]> => {
+  return apiCall<Experience[]>('/api/public/experience', {
+    next: { revalidate: 3600 } // 1 hour
+  })
 }
 
 // Tech Stack API
-export const techStackAPI = {
-  getAll: async (): Promise<TechStackItem[]> => {
-    return apiCall<TechStackItem[]>('/api/tech-stack')
-  },
-
-  getByCategory: async (category: string): Promise<TechStackItem[]> => {
-    return apiCall<TechStackItem[]>(`/api/tech-stack?category=${category}`)
-  },
+export const getTechStack = async (): Promise<TechStackItem[]> => {
+  return apiCall<TechStackItem[]>('/api/public/tech-stack', {
+    next: { revalidate: 3600 } // 1 hour
+  })
 }
 
 // Contact API
-export const contactAPI = {
-  submit: async (data: ContactFormData): Promise<ContactResponse> => {
-    return apiCall<ContactResponse>('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-  },
+export const submitContact = async (data: ContactFormData): Promise<ContactResponse> => {
+  return apiCall<ContactResponse>('/api/public/contact', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    cache: 'no-store' // Never cache
+  })
 }
 
-// CMS API
-export const cmsAPI = {
-  getProjects: async (): Promise<Project[]> => {
-    return projectsAPI.getAll()
-  },
+// Backward compatibility / convenience
+export const projectsAPI = {
+  getAll: getProjects,
+  getBySlug: getProjectBySlug
+}
 
-  getProjectBySlug: async (slug: string): Promise<CaseStudy> => {
-    return projectsAPI.getBySlug(slug)
-  },
+export const experienceAPI = {
+  getAll: getExperience
+}
 
-  getExperience: async (): Promise<Experience[]> => {
-    return experienceAPI.getAll()
-  },
+export const techStackAPI = {
+  getAll: getTechStack
+}
 
-  getTechStack: async (): Promise<TechStackItem[]> => {
-    return techStackAPI.getAll()
-  },
+export const contactAPI = {
+  submit: submitContact
+}
+
+export const siteConfigAPI = {
+  get: getSiteConfig
 }

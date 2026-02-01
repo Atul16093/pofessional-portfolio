@@ -6,9 +6,15 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Avatar } from '@/components/ui/Avatar'
 import { designTokens } from '@/theme/muiTheme'
-import { OWNER_NAME } from '@/lib/constants'
+import { SiteConfig } from '@/lib/types'
 
-export function Hero() {
+interface HeroProps {
+  siteConfig: SiteConfig
+}
+
+export function Hero({ siteConfig }: HeroProps) {
+  const { ownerName, ownerTitle, ownerSummary } = siteConfig
+
   return (
     <Box
       component="section"
@@ -55,8 +61,8 @@ export function Hero() {
                   height: '100%',
                 }}
                 src="/images/avatar.svg"
-                alt={OWNER_NAME}
-                initials={OWNER_NAME.substring(0, 2).toUpperCase()}
+                alt={ownerName}
+                initials={ownerName.substring(0, 2).toUpperCase()}
                 withBorder={false}
               />
             </Box>
@@ -75,16 +81,7 @@ export function Hero() {
                 lineHeight: 1.2,
               }}
             >
-              Full-Stack Software Engineer {' '}
-              <Box
-                component="span"
-                className="gradient-text"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-               Backend-Focused
-              </Box>
+              {ownerTitle}
             </Typography>
           </Box>
 
@@ -99,7 +96,7 @@ export function Hero() {
               margin: '0 auto',
             }}
           >
-            I am a seasoned full-stack software engineer with over 8 years of professional experience, specializing in backend development. My expertise lies in crafting robust and scalable SaaS-based architectures on the Amazon AWS platform.
+            {ownerSummary}
           </Typography>
 
           {/* CTAs */}

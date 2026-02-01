@@ -1,56 +1,22 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Box,
   Typography,
   Stack,
   Container,
-  CircularProgress,
   Card,
   CardContent,
 } from '@mui/material'
 import { designTokens } from '@/theme/muiTheme'
 import { Experience as ExperienceType } from '@/lib/types'
-import { experienceAPI } from '@/lib/api'
 
-export function Experience() {
-  const [experience, setExperience] = useState<ExperienceType[]>([])
-  const [loading, setLoading] = useState(true)
+interface ExperienceProps {
+  experience: ExperienceType[]
+}
 
-  useEffect(() => {
-    const fetchExperience = async () => {
-      try {
-        const data = await experienceAPI.getAll()
-        setExperience(data)
-      } catch (error) {
-        console.error('Failed to fetch experience:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchExperience()
-  }, [])
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          backgroundColor: designTokens.colors.backgroundSecondary,
-          py: { xs: 6, md: 8 },
-          px: { xs: 2, md: 3 },
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '300px',
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    )
-  }
-
+export function Experience({ experience }: ExperienceProps) {
   if (experience.length === 0) {
     return null
   }

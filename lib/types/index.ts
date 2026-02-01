@@ -81,3 +81,22 @@ export interface ContactResponse {
   message?: string
   error?: string
 }
+
+export interface SiteConfig {
+  ownerName: string
+  ownerTitle: string
+  ownerSummary?: string
+  socialLinks?: {
+    github?: string
+    linkedin?: string
+    twitter?: string
+    email?: string
+  }
+  contactEmail?: string
+  seo?: {
+    title?: string
+    description?: string
+    keywords?: string[]
+  }
+}
+

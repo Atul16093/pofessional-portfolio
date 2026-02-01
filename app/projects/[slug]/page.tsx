@@ -1,52 +1,32 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { CaseStudyCard } from '@/components/cards/CaseStudyCard'
-import { CaseStudy } from '@/lib/types'
-import { projectsAPI } from '@/lib/api'
+import { getProjectBySlug, getSiteConfig } from '@/lib/api'
 import { Box, Container, Typography } from '@mui/material'
 import { designTokens } from '@/theme/muiTheme'
 
-export default function ProjectDetailPage({
+export default async function ProjectDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>
 }) {
-  const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [slug, setSlug] = useState<string>('')
+  const { slug } = await params
+  
+  let caseStudy = null
+  let siteConfig = null
+  let error = null
 
-  useEffect(() => {
-    const loadParams = async () => {
-      const resolvedParams = await params
-      setSlug(resolvedParams.slug)
-    }
-    loadParams()
-  }, [params])
+  try {
+    [caseStudy, siteConfig] = await Promise.all([
+      getProjectBySlug(slug),
+      getSiteConfig()
+    ])
+  } catch (e) {
+    console.error('Failed to fetch data:', e)
+    error = 'Failed to load project details'
+  }
 
-  useEffect(() => {
-    if (!slug) return
-
-    const fetchCaseStudy = async () => {
-      try {
-        setLoading(true)
-        const data = await projectsAPI.getBySlug(slug)
-        setCaseStudy(data)
-      } catch (err) {
-        setError('Failed to load project details')
-        console.error('Failed to fetch case study:', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchCaseStudy()
-  }, [slug])
-
-  if (error) {
+  if (error || !caseStudy) {
     return (
       <>
         <Header />
@@ -70,7 +50,7 @@ export default function ProjectDetailPage({
                 mb: 2,
               }}
             >
-              {error}
+              {error || 'Project not found'}
             </Typography>
             <Typography
               variant="body1"
@@ -83,7 +63,7 @@ export default function ProjectDetailPage({
             </Typography>
           </Container>
         </Box>
-        <Footer />
+        <Footer siteConfig={siteConfig || undefined} />
       </>
     )
   }
@@ -92,24 +72,9 @@ export default function ProjectDetailPage({
     <>
       <Header />
       <main>
-        {caseStudy && <CaseStudyCard caseStudy={caseStudy} isLoading={loading} />}
-        {loading && !caseStudy && (
-          <Box
-            sx={{
-              minHeight: '60vh',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: designTokens.colors.backgroundPrimary,
-            }}
-          >
-            <Typography sx={{ color: designTokens.colors.secondaryText }}>
-              Loading...
-            </Typography>
-          </Box>
-        )}
+        <CaseStudyCard caseStudy={caseStudy} />
       </main>
-      <Footer />
+      <Footer siteConfig={siteConfig || undefined} />
     </>
   )
 }

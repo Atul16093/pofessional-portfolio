@@ -18,17 +18,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy
-  isLoading?: boolean
 }
 
-export function CaseStudyCard({ caseStudy, isLoading }: CaseStudyCardProps) {
-  if (isLoading) {
-    return (
-      <Box sx={{ py: 8, textAlign: 'center' }}>
-        <Typography>Loading...</Typography>
-      </Box>
-    )
-  }
+export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
 
   return (
     <>

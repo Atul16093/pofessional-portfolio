@@ -15,11 +15,26 @@ import EmailIcon from '@mui/icons-material/Email'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import { designTokens } from '@/theme/muiTheme'
 import { OWNER_NAME, OWNER_TITLE } from '@/lib/constants'
+import { SiteConfig } from '@/lib/types'
 
 const currentYear = new Date().getFullYear()
 
-export function Footer() {
-  const socialIcons: Record<string, React.ReactNode> = {
+interface FooterProps {
+  siteConfig?: SiteConfig
+}
+
+export function Footer({ siteConfig }: FooterProps) {
+  const name = siteConfig?.ownerName || OWNER_NAME
+  const title = siteConfig?.ownerTitle || OWNER_TITLE
+
+  const socialLinks = siteConfig?.socialLinks || {
+    github: 'https://github.com',
+    linkedin: 'https://linkedin.com',
+    twitter: 'https://twitter.com',
+    email: 'mailto:hello@example.com'
+  }
+
+  const socialIcons = {
     github: <GitHubIcon />,
     linkedin: <LinkedInIcon />,
     email: <EmailIcon />,
@@ -50,7 +65,7 @@ export function Footer() {
                   mb: 2,
                 }}
               >
-                {OWNER_NAME}
+                {name}
               </Typography>
               <Typography
                 variant="body2"
@@ -59,7 +74,7 @@ export function Footer() {
                   lineHeight: 1.8,
                 }}
               >
-                {OWNER_TITLE}
+                {title}
               </Typography>
             </Box>
 
@@ -141,77 +156,85 @@ export function Footer() {
                 color: designTokens.colors.secondaryText,
               }}
             >
-              © {currentYear} {OWNER_NAME}. All rights reserved.
+              © {currentYear} {name}. All rights reserved.
             </Typography>
 
             {/* Social Links */}
             <Stack direction="row" spacing={2}>
-              <MuiLink
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.github}
-              </MuiLink>
-              <MuiLink
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.linkedin}
-              </MuiLink>
-              <MuiLink
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.twitter}
-              </MuiLink>
-              <MuiLink
-                href="mailto:hello@example.com"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.email}
-              </MuiLink>
+              {socialLinks.github && (
+                <MuiLink
+                  href={socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: designTokens.colors.secondaryText,
+                    transition: 'color 0.3s ease',
+                    '&:hover': {
+                      color: designTokens.colors.accentHighlight,
+                    },
+                  }}
+                >
+                  {socialIcons.github}
+                </MuiLink>
+              )}
+              {socialLinks.linkedin && (
+                <MuiLink
+                  href={socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: designTokens.colors.secondaryText,
+                    transition: 'color 0.3s ease',
+                    '&:hover': {
+                      color: designTokens.colors.accentHighlight,
+                    },
+                  }}
+                >
+                  {socialIcons.linkedin}
+                </MuiLink>
+              )}
+              {socialLinks.twitter && (
+                <MuiLink
+                  href={socialLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: designTokens.colors.secondaryText,
+                    transition: 'color 0.3s ease',
+                    '&:hover': {
+                      color: designTokens.colors.accentHighlight,
+                    },
+                  }}
+                >
+                  {socialIcons.twitter}
+                </MuiLink>
+              )}
+              {socialLinks.email && (
+                <MuiLink
+                  href={socialLinks.email.startsWith('mailto:') ? socialLinks.email : `mailto:${socialLinks.email}`}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: designTokens.colors.secondaryText,
+                    transition: 'color 0.3s ease',
+                    '&:hover': {
+                      color: designTokens.colors.accentHighlight,
+                    },
+                  }}
+                >
+                  {socialIcons.email}
+                </MuiLink>
+              )}
             </Stack>
           </Box>
         </Stack>
