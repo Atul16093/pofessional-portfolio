@@ -156,7 +156,7 @@ export function Footer({ siteConfig }: FooterProps) {
                 color: designTokens.colors.secondaryText,
               }}
             >
-              © {currentYear} {name}. All rights reserved.
+              {siteConfig?.footerText || `© ${currentYear} ${name}. All rights reserved.`}
             </Typography>
 
             {/* Social Links */}

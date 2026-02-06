@@ -44,8 +44,9 @@ async function serverFetch<T>(
 // Site Config API
 export const getSiteConfig = async (): Promise<SiteConfig> => {
   const response = await serverFetch<ApiResponse<any>>('/public/site-config', {
-    next: { revalidate: 1800 } // 30 mins
+    next: { revalidate: 60 } // 30 mins
   })
+  console.dir(response, { depth: null })
   
   const data = response.data || response
 
@@ -61,7 +62,8 @@ export const getSiteConfig = async (): Promise<SiteConfig> => {
         }, {})
       : data.socialLinks,
     contactEmail: data.contactEmail,
-    seo: data.seo
+    seo: data.seo,
+    footerText: data.footerText
   }
 }
 
@@ -90,7 +92,7 @@ export const getProjects = async (): Promise<Project[]> => {
 
 export const getProjectBySlug = async (slug: string): Promise<CaseStudy> => {
   const response = await serverFetch<ApiResponse<any>>(`/public/projects/${slug}`, {
-    next: { revalidate: 1800 } // 30 mins
+    next: { revalidate: 60 } // 30 mins
   })
   
   const item = response.data || response
@@ -114,6 +116,7 @@ export const getExperience = async (): Promise<Experience[]> => {
   const response = await serverFetch<ApiResponse<any[]>>('/public/experience', {
     next: { revalidate: 3600 } // 1 hour
   })
+  console.log("Experience API response",response)
   
   const rawData = response.data || []
 

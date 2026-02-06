@@ -98,5 +98,6 @@ export interface SiteConfig {
     description?: string
     keywords?: string[]
   }
+  footerText?: string
 }
 
