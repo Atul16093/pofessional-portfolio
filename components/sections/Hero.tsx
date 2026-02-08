@@ -83,15 +83,16 @@ console.log(siteConfig.ownerName,"ownerName")
                 lineHeight: 1.2,
               }}
             >
-              {ownerTitle.split(" ")[0] + " " + ownerTitle.split(" ")[1] + " " + ownerTitle.split(" ")[2] + " "}
-                <Box
+              {ownerTitle.split(" ").slice(0, 3).join(" ")}
+              <Box
                 component="span"
                 className="gradient-text"
                 sx={{
                   fontWeight: 700,
+                  display: 'block',
                 }}
               >
-               {ownerTitle.split(" ")[3] + " " + ownerTitle.split(" ")[4]}
+                {ownerTitle.split(" ").slice(3).join(" ")}
               </Box>
             </Typography>
           </Box>
@@ -103,7 +104,7 @@ console.log(siteConfig.ownerName,"ownerName")
               color: designTokens.colors.primaryText,
               fontSize: { xs: '1rem', md: '1.1rem' },
               lineHeight: 1.8,
-              maxWidth: '700px',
+              maxWidth: '900px',
               margin: '0 auto',
             }}
           >
