@@ -72,7 +72,8 @@ export const getProjects = async (): Promise<Project[]> => {
   const response = await serverFetch<ApiResponse<any[]>>('/public/projects', {
     next: { revalidate: 300 } // 5 mins
   })
-  
+  console.log("Projects API response")
+  console.dir(response, { depth: null })
   const rawData = response.data || []
   
   // Adapt backend project to Project interface

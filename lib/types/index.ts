@@ -6,6 +6,7 @@ export interface TechStackItem {
   name: string
   category: string
   icon?: string
+  iconUrl?: string
 }
 
 export interface Project {

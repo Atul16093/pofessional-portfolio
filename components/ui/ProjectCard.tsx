@@ -143,7 +143,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <Box sx={{ flexGrow: 1, minHeight: 8 }} />
 
             {/* Tech Stack Tags with Icons */}
-            {project.tags && project.tags.length > 0 && (
+            {/* Tech Stack Tags with Icons */}
+            {((project.techStack && project.techStack.length > 0) || (project.tags && project.tags.length > 0)) && (
               <Stack 
                 direction="row" 
                 spacing={1} 
@@ -155,18 +156,27 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   alignItems: 'center',
                 }}
               >
-                {project.tags.slice(0, isCompact ? 2 : 4).map((tag) => {
-                  const iconUrl = getTechIconUrl(tag)
+                {(project.techStack && project.techStack.length > 0 
+                  ? project.techStack 
+                  : (project.tags || []).map(tag => ({ id: tag, name: tag, iconUrl: getTechIconUrl(tag) }))
+                )
+                .slice(0, isCompact ? 2 : 4)
+                .map((item) => {
+                  // For techStack items, use iconUrl or fallback to utility
+                  // For tags, we constructed an object with iconUrl from utility
+                  const techName = 'name' in item ? item.name : String(item)
+                  const iconUrl = 'iconUrl' in item ? item.iconUrl : ('icon' in item ? item.icon : getTechIconUrl(techName))
+
                   return (
                     <Chip
-                      key={tag}
-                      label={tag}
+                      key={'id' in item ? item.id : techName}
+                      label={techName}
                       size="small"
                       avatar={
                         iconUrl ? (
                           <Avatar
                             src={iconUrl}
-                            alt={tag}
+                            alt={techName}
                             onError={(e) => {
                               // Hide avatar if icon fails to load
                               const target = e.target as HTMLImageElement
