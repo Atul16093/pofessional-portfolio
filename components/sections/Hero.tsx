@@ -14,7 +14,9 @@ interface HeroProps {
 
 export function Hero({ siteConfig }: HeroProps) {
   const { ownerName, ownerTitle, ownerSummary } = siteConfig
-
+console.log(siteConfig.ownerSummary,"ownerSummary")
+console.log(siteConfig.ownerTitle,"ownerTitle")
+console.log(siteConfig.ownerName,"ownerName")
   return (
     <Box
       component="section"
@@ -81,7 +83,16 @@ export function Hero({ siteConfig }: HeroProps) {
                 lineHeight: 1.2,
               }}
             >
-              {ownerTitle}
+              {ownerTitle.split(" ")[0] + " " + ownerTitle.split(" ")[1] + " " + ownerTitle.split(" ")[2] + " "}
+                <Box
+                component="span"
+                className="gradient-text"
+                sx={{
+                  fontWeight: 700,
+                }}
+              >
+               {ownerTitle.split(" ")[3] + " " + ownerTitle.split(" ")[4]}
+              </Box>
             </Typography>
           </Box>
 
