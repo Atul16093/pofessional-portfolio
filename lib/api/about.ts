@@ -40,7 +40,7 @@ export async function getAbout(): Promise<AboutData | null> {
     // strictly on the server (Server Component -> Backend).
     const response = await fetch(url, {
       cache: 'force-cache',
-      next: { revalidate: 3600 } // Revalidate every hour (ISR)
+      next: { revalidate: 3 } // Revalidate every hour (ISR)
     })
 
     if (!response.ok) {

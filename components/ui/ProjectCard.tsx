@@ -29,14 +29,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const isCompact = variant === 'compact'
 
   return (
-    <Link 
-      href={`/projects/${project.slug}`} 
-      style={{ 
-        textDecoration: 'none',
-        height: '100%',
-        display: 'block',
-      }}
-    >
       <Card
         className="project-card"
         sx={{
@@ -50,7 +42,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           overflow: 'hidden',
           position: 'relative',
-          cursor: 'pointer',
+          cursor: 'default', // Changed from pointer to default
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -236,34 +228,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 })}
               </Stack>
             )}
-
-            {/* CTA */}
-            <Typography
-              sx={{
-                color: designTokens.colors.accentHighlight,
-                fontWeight: 600,
-                mt: 1,
-                fontSize: '0.9rem',
-                position: 'relative',
-                zIndex: 2,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.5,
-                transition: 'all 0.3s ease',
-                '&::after': {
-                  content: '"→"',
-                  transition: 'transform 0.3s ease',
-                  display: 'inline-block',
-                },
-                '&:hover::after': {
-                  transform: 'translateX(4px)',
-                },
-              }}
-            >
-              View Case Study
-            </Typography>
           </CardContent>
         </Card>
-    </Link>
   )
 }

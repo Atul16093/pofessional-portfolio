@@ -140,29 +140,33 @@ console.log(siteConfig.ownerName,"ownerName")
                 Get In Touch
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              size="large"
-              sx={{
-                minWidth: { xs: '100%', sm: 'auto' },
-                px: { xs: 3, sm: 4 },
-                py: 1.5,
-                backgroundColor: designTokens.colors.backgroundPrimary,
-                color: designTokens.colors.primaryText,
-                border: `2px solid ${designTokens.colors.primaryText}`,
-                fontWeight: 600,
-                '&:hover': {
-                  backgroundColor: designTokens.colors.backgroundSecondary,
-                  borderColor: designTokens.colors.primaryText,
-                },
-              }}
-              onClick={() => {
-                // Download CV - placeholder for now
-                window.open('#', '_blank')
-              }}
-            >
-              Download CV
-            </Button>
+
+            {siteConfig.secondaryCtaLink && (
+              <Button
+                component="a"
+                href={siteConfig.secondaryCtaLink}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+                size="large"
+                sx={{
+                  minWidth: { xs: '100%', sm: 'auto' },
+                  px: { xs: 3, sm: 4 },
+                  py: 1.5,
+                  backgroundColor: designTokens.colors.backgroundPrimary,
+                  color: designTokens.colors.primaryText,
+                  border: `2px solid ${designTokens.colors.primaryText}`,
+                  fontWeight: 600,
+                  '&:hover': {
+                    backgroundColor: designTokens.colors.backgroundSecondary,
+                    borderColor: designTokens.colors.primaryText,
+                  },
+                }}
+              >
+                Download CV
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Container>

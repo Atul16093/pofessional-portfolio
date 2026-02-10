@@ -6,12 +6,12 @@ export const mockSiteConfig: SiteConfig = {
   ownerName: OWNER_NAME,
   ownerTitle: OWNER_TITLE,
   ownerSummary: OWNER_SUMMARY,
-  socialLinks: {
-    github: 'https://github.com/atulRaghuwanshi',
-    linkedin: 'https://linkedin.com',
-    twitter: 'https://twitter.com',
-    email: 'mailto:hello@example.com'
-  }
+  socialLinks: [
+    { platform: 'github', url: 'https://github.com/atulRaghuwanshi' },
+    { platform: 'linkedin', url: 'https://linkedin.com' },
+    { platform: 'instagram', url: 'https://instagram.com' },
+    { platform: 'email', url: 'mailto:hello@example.com' }
+  ]
 }
 
 // Mock Tech Stack Data

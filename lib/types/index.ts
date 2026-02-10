@@ -83,16 +83,16 @@ export interface ContactResponse {
   error?: string
 }
 
+export interface SocialLink {
+  platform: string
+  url: string
+}
+
 export interface SiteConfig {
   ownerName: string
   ownerTitle: string
   ownerSummary?: string
-  socialLinks?: {
-    github?: string
-    linkedin?: string
-    twitter?: string
-    email?: string
-  }
+  socialLinks?: SocialLink[]
   contactEmail?: string
   seo?: {
     title?: string
@@ -100,5 +100,8 @@ export interface SiteConfig {
     keywords?: string[]
   }
   footerText?: string
+  primaryCtaLink?: string
+  secondaryCtaLink?: string
+  aboutContent?: string
 }
 

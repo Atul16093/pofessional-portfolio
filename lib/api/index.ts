@@ -55,22 +55,20 @@ export const getSiteConfig = async (): Promise<SiteConfig> => {
     ownerName: data.ownerName || OWNER_NAME,
     ownerTitle: data.heroTitle || OWNER_TITLE,
     ownerSummary: data.heroDescription || OWNER_SUMMARY,
-    socialLinks: Array.isArray(data.socialLinks) 
-      ? data.socialLinks.reduce((acc: any, link: any) => {
-          if (link.platform) acc[link.platform] = link.url;
-          return acc;
-        }, {})
-      : data.socialLinks,
+    socialLinks: Array.isArray(data.socialLinks) ? data.socialLinks : [],
     contactEmail: data.contactEmail,
     seo: data.seo,
-    footerText: data.footerText
+    footerText: data.footerText,
+    primaryCtaLink: data.primaryCtaLink,
+    secondaryCtaLink: data.secondaryCtaLink,
+    aboutContent: data.aboutContent
   }
 }
 
 // Projects API
 export const getProjects = async (): Promise<Project[]> => {
   const response = await serverFetch<ApiResponse<any[]>>('/public/projects', {
-    next: { revalidate: 300 } // 5 mins
+    next: { revalidate: 3 } // 5 mins
   })
   console.log("Projects API response")
   console.dir(response, { depth: null })
@@ -93,7 +91,7 @@ export const getProjects = async (): Promise<Project[]> => {
 
 export const getProjectBySlug = async (slug: string): Promise<CaseStudy> => {
   const response = await serverFetch<ApiResponse<any>>(`/public/projects/${slug}`, {
-    next: { revalidate: 60 } // 30 mins
+    next: { revalidate: 6 } // 30 mins
   })
   
   const item = response.data || response
@@ -115,7 +113,7 @@ export const getProjectBySlug = async (slug: string): Promise<CaseStudy> => {
 // Experience API
 export const getExperience = async (): Promise<Experience[]> => {
   const response = await serverFetch<ApiResponse<any[]>>('/public/experience', {
-    next: { revalidate: 3600 } // 1 hour
+    next: { revalidate: 3} // 1 hour
   })
   console.log("Experience API response",response)
   
@@ -137,7 +135,7 @@ export const getExperience = async (): Promise<Experience[]> => {
 // Tech Stack API
 export const getTechStack = async (): Promise<TechStackItem[]> => {
   const response = await serverFetch<ApiResponse<any>>('/public/tech-stack', {
-    next: { revalidate: 3600 } // 1 hour
+    next: { revalidate: 3 } // 1 hour
   })
   
   const data = response.data || {}
