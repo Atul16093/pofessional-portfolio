@@ -3,8 +3,13 @@
 import { Container, Box, Typography } from '@mui/material'
 import { ProjectsSection } from '@/components/sections/Projects'
 import { designTokens } from '@/theme/muiTheme'
+import { Project } from '@/lib/types'
 
-export function ProjectsPageContent() {
+interface ProjectsPageContentProps {
+  projects: Project[]
+}
+
+export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
   return (
     <main>
       {/* Hero Section for Projects Page */}
@@ -44,7 +49,7 @@ export function ProjectsPageContent() {
 
       {/* Projects List */}
       <Box sx={{ backgroundColor: designTokens.colors.backgroundPrimary }}>
-        <ProjectsSection />
+        <ProjectsSection projects={projects} />
       </Box>
     </main>
   )

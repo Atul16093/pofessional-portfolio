@@ -6,9 +6,17 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Avatar } from '@/components/ui/Avatar'
 import { designTokens } from '@/theme/muiTheme'
-import { OWNER_NAME } from '@/lib/constants'
+import { SiteConfig } from '@/lib/types'
 
-export function Hero() {
+interface HeroProps {
+  siteConfig: SiteConfig
+}
+
+export function Hero({ siteConfig }: HeroProps) {
+  const { ownerName, ownerTitle, ownerSummary } = siteConfig
+console.log(siteConfig.ownerSummary,"ownerSummary")
+console.log(siteConfig.ownerTitle,"ownerTitle")
+console.log(siteConfig.ownerName,"ownerName")
   return (
     <Box
       component="section"
@@ -55,8 +63,8 @@ export function Hero() {
                   height: '100%',
                 }}
                 src="/images/avatar.svg"
-                alt={OWNER_NAME}
-                initials={OWNER_NAME.substring(0, 2).toUpperCase()}
+                alt={ownerName}
+                initials={ownerName.substring(0, 2).toUpperCase()}
                 withBorder={false}
               />
             </Box>
@@ -75,15 +83,16 @@ export function Hero() {
                 lineHeight: 1.2,
               }}
             >
-              Full-Stack Software Engineer {' '}
+              {ownerTitle.split(" ").slice(0, 3).join(" ")}
               <Box
                 component="span"
                 className="gradient-text"
                 sx={{
                   fontWeight: 700,
+                  display: 'block',
                 }}
               >
-               Backend-Focused
+                {ownerTitle.split(" ").slice(3).join(" ")}
               </Box>
             </Typography>
           </Box>
@@ -95,11 +104,11 @@ export function Hero() {
               color: designTokens.colors.primaryText,
               fontSize: { xs: '1rem', md: '1.1rem' },
               lineHeight: 1.8,
-              maxWidth: '700px',
+              maxWidth: '900px',
               margin: '0 auto',
             }}
           >
-            I am a seasoned full-stack software engineer with over 8 years of professional experience, specializing in backend development. My expertise lies in crafting robust and scalable SaaS-based architectures on the Amazon AWS platform.
+            {ownerSummary}
           </Typography>
 
           {/* CTAs */}
@@ -131,29 +140,33 @@ export function Hero() {
                 Get In Touch
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              size="large"
-              sx={{
-                minWidth: { xs: '100%', sm: 'auto' },
-                px: { xs: 3, sm: 4 },
-                py: 1.5,
-                backgroundColor: designTokens.colors.backgroundPrimary,
-                color: designTokens.colors.primaryText,
-                border: `2px solid ${designTokens.colors.primaryText}`,
-                fontWeight: 600,
-                '&:hover': {
-                  backgroundColor: designTokens.colors.backgroundSecondary,
-                  borderColor: designTokens.colors.primaryText,
-                },
-              }}
-              onClick={() => {
-                // Download CV - placeholder for now
-                window.open('#', '_blank')
-              }}
-            >
-              Download CV
-            </Button>
+
+            {siteConfig.secondaryCtaLink && (
+              <Button
+                component="a"
+                href={siteConfig.secondaryCtaLink}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+                size="large"
+                sx={{
+                  minWidth: { xs: '100%', sm: 'auto' },
+                  px: { xs: 3, sm: 4 },
+                  py: 1.5,
+                  backgroundColor: designTokens.colors.backgroundPrimary,
+                  color: designTokens.colors.primaryText,
+                  border: `2px solid ${designTokens.colors.primaryText}`,
+                  fontWeight: 600,
+                  '&:hover': {
+                    backgroundColor: designTokens.colors.backgroundSecondary,
+                    borderColor: designTokens.colors.primaryText,
+                  },
+                }}
+              >
+                Download CV
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Container>

@@ -1,4 +1,18 @@
-import { Project, CaseStudy, Experience, TechStackItem } from '@/lib/types'
+import { Project, CaseStudy, Experience, TechStackItem, SiteConfig } from '@/lib/types'
+import { OWNER_NAME, OWNER_TITLE, OWNER_SUMMARY } from '@/lib/constants'
+
+// Mock Site Config
+export const mockSiteConfig: SiteConfig = {
+  ownerName: OWNER_NAME,
+  ownerTitle: OWNER_TITLE,
+  ownerSummary: OWNER_SUMMARY,
+  socialLinks: [
+    { platform: 'github', url: 'https://github.com/atulRaghuwanshi' },
+    { platform: 'linkedin', url: 'https://linkedin.com' },
+    { platform: 'instagram', url: 'https://instagram.com' },
+    { platform: 'email', url: 'mailto:hello@example.com' }
+  ]
+}
 
 // Mock Tech Stack Data
 export const mockTechStack: TechStackItem[] = [

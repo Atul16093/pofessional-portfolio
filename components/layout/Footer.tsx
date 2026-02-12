@@ -12,18 +12,39 @@ import {
 import GitHubIcon from '@mui/icons-material/GitHub'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import EmailIcon from '@mui/icons-material/Email'
-import TwitterIcon from '@mui/icons-material/Twitter'
+import InstagramIcon from '@mui/icons-material/Instagram'
 import { designTokens } from '@/theme/muiTheme'
 import { OWNER_NAME, OWNER_TITLE } from '@/lib/constants'
+import { SiteConfig } from '@/lib/types'
 
 const currentYear = new Date().getFullYear()
 
-export function Footer() {
+interface FooterProps {
+  siteConfig?: SiteConfig
+}
+
+export function Footer({ siteConfig }: FooterProps) {
+  const name = siteConfig?.ownerName || OWNER_NAME
+  const title = siteConfig?.ownerTitle || OWNER_TITLE
+
+  const socialLinks = siteConfig?.socialLinks?.length ? siteConfig.socialLinks : [
+    { platform: 'github', url: 'https://github.com' },
+    { platform: 'linkedin', url: 'https://linkedin.com' },
+    { platform: 'instagram', url: 'https://instagram.com' },
+    { platform: 'email', url: 'mailto:hello@example.com' }
+  ]
+
   const socialIcons: Record<string, React.ReactNode> = {
     github: <GitHubIcon />,
     linkedin: <LinkedInIcon />,
     email: <EmailIcon />,
-    twitter: <TwitterIcon />,
+    instagram: <InstagramIcon />,
+  }
+
+  // Helper to normalize platform names
+  const getIcon = (platform: string) => {
+    const normalized = platform.toLowerCase().trim()
+    return socialIcons[normalized] || null
   }
 
   return (
@@ -50,7 +71,7 @@ export function Footer() {
                   mb: 2,
                 }}
               >
-                {OWNER_NAME}
+                {name}
               </Typography>
               <Typography
                 variant="body2"
@@ -59,7 +80,7 @@ export function Footer() {
                   lineHeight: 1.8,
                 }}
               >
-                {OWNER_TITLE}
+                {title}
               </Typography>
             </Box>
 
@@ -141,77 +162,42 @@ export function Footer() {
                 color: designTokens.colors.secondaryText,
               }}
             >
-              © {currentYear} {OWNER_NAME}. All rights reserved.
+              {siteConfig?.footerText || `© ${currentYear} ${name}. All rights reserved.`}
             </Typography>
 
             {/* Social Links */}
             <Stack direction="row" spacing={2}>
-              <MuiLink
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.github}
-              </MuiLink>
-              <MuiLink
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.linkedin}
-              </MuiLink>
-              <MuiLink
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.twitter}
-              </MuiLink>
-              <MuiLink
-                href="mailto:hello@example.com"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: designTokens.colors.secondaryText,
-                  transition: 'color 0.3s ease',
-                  '&:hover': {
-                    color: designTokens.colors.accentHighlight,
-                  },
-                }}
-              >
-                {socialIcons.email}
-              </MuiLink>
+              {socialLinks.map((link) => {
+                const icon = getIcon(link.platform)
+                if (!icon) return null
+
+                // Handle email specifically or generic URL
+                const href = link.platform.toLowerCase() === 'email' && !link.url.startsWith('mailto:') 
+                   ? `mailto:${link.url}` 
+                   : link.url
+
+                return (
+                  <MuiLink
+                    key={link.platform + link.url}
+                    href={href}
+                    target={link.platform.toLowerCase() === 'email' ? undefined : '_blank'}
+                    rel={link.platform.toLowerCase() === 'email' ? undefined : 'noopener noreferrer'}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: designTokens.colors.secondaryText,
+                      transition: 'color 0.3s ease',
+                      '&:hover': {
+                        color: designTokens.colors.accentHighlight,
+                      },
+                    }}
+                    title={link.platform}
+                  >
+                    {icon}
+                  </MuiLink>
+                )
+              })}
             </Stack>
           </Box>
         </Stack>

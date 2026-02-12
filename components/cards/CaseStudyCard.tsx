@@ -9,26 +9,20 @@ import {
   Chip,
   Paper,
   Link as MuiLink,
+  Avatar,
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CaseStudy } from '@/lib/types'
 import { designTokens } from '@/theme/muiTheme'
+import { getTechIconUrl } from '@/lib/utils/techIcons'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy
-  isLoading?: boolean
 }
 
-export function CaseStudyCard({ caseStudy, isLoading }: CaseStudyCardProps) {
-  if (isLoading) {
-    return (
-      <Box sx={{ py: 8, textAlign: 'center' }}>
-        <Typography>Loading...</Typography>
-      </Box>
-    )
-  }
+export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
 
   return (
     <>
@@ -107,21 +101,50 @@ export function CaseStudyCard({ caseStudy, isLoading }: CaseStudyCardProps) {
                 >
                   Tech Stack
                 </Typography>
-                <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
-                  {caseStudy.techStack.map((tech) => (
-                    <Chip
-                      key={tech.id}
-                      label={tech.name}
-                      size="small"
-                      sx={{
-                        backgroundColor: designTokens.colors.backgroundSecondary,
-                        color: designTokens.colors.primaryText,
-                        fontWeight: 500,
-                        borderColor: designTokens.colors.accentHighlight,
-                        border: `1px solid ${designTokens.colors.accentHighlight}`,
-                      }}
-                    />
-                  ))}
+                <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap', gap: 1 }}>
+                  {caseStudy.techStack.map((tech) => {
+                    const iconUrl = tech.iconUrl || tech.icon || getTechIconUrl(tech.name)
+                    return (
+                      <Chip
+                        key={tech.id}
+                        label={tech.name}
+                        size="small"
+                        avatar={
+                          iconUrl ? (
+                            <Avatar
+                              src={iconUrl}
+                              alt={tech.name}
+                              sx={{
+                                width: 20,
+                                height: 20,
+                                bgcolor: 'transparent',
+                                '& img': {
+                                  objectFit: 'contain',
+                                  filter: 'none',
+                                },
+                              }}
+                            />
+                          ) : undefined
+                        }
+                        sx={{
+                          backgroundColor: designTokens.colors.backgroundSecondary,
+                          color: designTokens.colors.primaryText,
+                          fontWeight: 500,
+                          borderColor: designTokens.colors.accentHighlight,
+                          border: `1px solid ${designTokens.colors.accentHighlight}`,
+                          '& .MuiChip-label': {
+                            px: iconUrl ? 1.5 : 1.5,
+                            pl: iconUrl ? 0.25 : 1.5,
+                          },
+                          '& .MuiChip-avatar': {
+                            ml: 0.5,
+                            width: 20,
+                            height: 20,
+                          }
+                        }}
+                      />
+                    )
+                  })}
                 </Stack>
               </Box>
             )}

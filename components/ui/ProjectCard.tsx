@@ -29,14 +29,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const isCompact = variant === 'compact'
 
   return (
-    <Link 
-      href={`/projects/${project.slug}`} 
-      style={{ 
-        textDecoration: 'none',
-        height: '100%',
-        display: 'block',
-      }}
-    >
       <Card
         className="project-card"
         sx={{
@@ -50,7 +42,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           overflow: 'hidden',
           position: 'relative',
-          cursor: 'pointer',
+          cursor: 'default', // Changed from pointer to default
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -143,7 +135,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <Box sx={{ flexGrow: 1, minHeight: 8 }} />
 
             {/* Tech Stack Tags with Icons */}
-            {project.tags && project.tags.length > 0 && (
+            {/* Tech Stack Tags with Icons */}
+            {((project.techStack && project.techStack.length > 0) || (project.tags && project.tags.length > 0)) && (
               <Stack 
                 direction="row" 
                 spacing={1} 
@@ -155,18 +148,27 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   alignItems: 'center',
                 }}
               >
-                {project.tags.slice(0, isCompact ? 2 : 4).map((tag) => {
-                  const iconUrl = getTechIconUrl(tag)
+                {(project.techStack && project.techStack.length > 0 
+                  ? project.techStack 
+                  : (project.tags || []).map(tag => ({ id: tag, name: tag, iconUrl: getTechIconUrl(tag) }))
+                )
+                .slice(0, isCompact ? 2 : 4)
+                .map((item) => {
+                  // For techStack items, use iconUrl or fallback to utility
+                  // For tags, we constructed an object with iconUrl from utility
+                  const techName = 'name' in item ? item.name : String(item)
+                  const iconUrl = 'iconUrl' in item ? item.iconUrl : ('icon' in item ? item.icon : getTechIconUrl(techName))
+
                   return (
                     <Chip
-                      key={tag}
-                      label={tag}
+                      key={'id' in item ? item.id : techName}
+                      label={techName}
                       size="small"
                       avatar={
                         iconUrl ? (
                           <Avatar
                             src={iconUrl}
-                            alt={tag}
+                            alt={techName}
                             onError={(e) => {
                               // Hide avatar if icon fails to load
                               const target = e.target as HTMLImageElement
@@ -226,34 +228,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 })}
               </Stack>
             )}
-
-            {/* CTA */}
-            <Typography
-              sx={{
-                color: designTokens.colors.accentHighlight,
-                fontWeight: 600,
-                mt: 1,
-                fontSize: '0.9rem',
-                position: 'relative',
-                zIndex: 2,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.5,
-                transition: 'all 0.3s ease',
-                '&::after': {
-                  content: '"→"',
-                  transition: 'transform 0.3s ease',
-                  display: 'inline-block',
-                },
-                '&:hover::after': {
-                  transform: 'translateX(4px)',
-                },
-              }}
-            >
-              View Case Study
-            </Typography>
           </CardContent>
         </Card>
-    </Link>
   )
 }

@@ -1,21 +1,40 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { AboutPageContent } from '@/components/pages/AboutPageContent'
-import { OWNER_NAME, OWNER_TITLE, OWNER_SUMMARY } from '@/lib/constants'
+import { getAbout } from '@/lib/api/about'
+import { getSiteConfig } from '@/lib/api'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: `About | ${OWNER_NAME}`,
-  description: `Learn more about ${OWNER_NAME}, a ${OWNER_TITLE}. ${OWNER_SUMMARY}`,
+// Generate dynamic metadata for SEO
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getAbout()
+  
+  if (!data) {
+    return {
+      title: 'About | Portfolio',
+      description: 'About the portfolio owner.'
+    }
+  }
+
+  return {
+    title: `About | ${data.name}`,
+    description: `Learn more about ${data.name}, a ${data.title}. ${data.shortIntro || ''}`,
+  }
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  // Fetch data on the server (cached)
+  // We use fetch() implicitly via getAbout() to support ISR
+  const [aboutData, siteConfig] = await Promise.all([
+    getAbout(),
+    getSiteConfig() // Site config for the Footer
+  ])
+
   return (
     <>
       <Header />
-      <AboutPageContent />
-      <Footer />
+      <AboutPageContent data={aboutData} />
+      <Footer siteConfig={siteConfig} />
     </>
   )
 }
-

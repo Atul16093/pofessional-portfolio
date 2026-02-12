@@ -2,9 +2,21 @@
 
 import { Box, Container, Typography, Stack } from '@mui/material'
 import { designTokens } from '@/theme/muiTheme'
-import { OWNER_NAME, OWNER_TITLE, OWNER_SUMMARY } from '@/lib/constants'
+import { AboutData } from '@/lib/api/about'
 
-export function AboutPageContent() {
+interface AboutPageContentProps {
+  data: AboutData | null
+}
+
+export function AboutPageContent({ data }: AboutPageContentProps) {
+  if (!data) {
+    return (
+      <Box sx={{ py: 8, textAlign: 'center' }}>
+        <Typography>Loading...</Typography>
+      </Box>
+    )
+  }
+
   return (
     <main>
       <Box sx={{ backgroundColor: designTokens.colors.backgroundPrimary, minHeight: '100vh' }}>
@@ -23,17 +35,19 @@ export function AboutPageContent() {
               >
                 About Me
               </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: designTokens.colors.secondaryText,
-                  fontSize: '1.1rem',
-                  maxWidth: '800px',
-                  mx: 'auto',
-                }}
-              >
-                {OWNER_SUMMARY}
-              </Typography>
+              {data.shortIntro && (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: designTokens.colors.secondaryText,
+                    fontSize: '1.1rem',
+                    maxWidth: '800px',
+                    mx: 'auto',
+                  }}
+                >
+                  {data.shortIntro}
+                </Typography>
+              )}
             </Box>
 
             {/* Main Content */}
@@ -53,7 +67,7 @@ export function AboutPageContent() {
                     fontWeight: 700,
                   }}
                 >
-                  {OWNER_NAME}
+                  {data.name}
                 </Typography>
                 <Typography
                   variant="h5"
@@ -62,30 +76,21 @@ export function AboutPageContent() {
                     fontWeight: 600,
                   }}
                 >
-                  {OWNER_TITLE}
+                  {data.title}
                 </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: designTokens.colors.secondaryText,
-                    lineHeight: 1.8,
-                  }}
-                >
-                  I am a seasoned full-stack software engineer with over 8 years of professional experience, 
-                  specializing in backend development. My expertise lies in crafting robust and scalable 
-                  SaaS-based architectures on the Amazon AWS platform.
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: designTokens.colors.secondaryText,
-                    lineHeight: 1.8,
-                  }}
-                >
-                  Throughout my career, I've focused on building high-performance systems that can handle 
-                  scale, designing distributed architectures, and implementing real-time solutions that 
-                  deliver exceptional user experiences.
-                </Typography>
+                
+                {data.description && data.description.map((paragraph, index) => (
+                  <Typography
+                    key={index}
+                    variant="body1"
+                    sx={{
+                      color: designTokens.colors.secondaryText,
+                      lineHeight: 1.8,
+                    }}
+                  >
+                    {paragraph}
+                  </Typography>
+                ))}
               </Stack>
             </Box>
           </Stack>

@@ -6,6 +6,7 @@ export interface TechStackItem {
   name: string
   category: string
   icon?: string
+  iconUrl?: string
 }
 
 export interface Project {
@@ -81,3 +82,26 @@ export interface ContactResponse {
   message?: string
   error?: string
 }
+
+export interface SocialLink {
+  platform: string
+  url: string
+}
+
+export interface SiteConfig {
+  ownerName: string
+  ownerTitle: string
+  ownerSummary?: string
+  socialLinks?: SocialLink[]
+  contactEmail?: string
+  seo?: {
+    title?: string
+    description?: string
+    keywords?: string[]
+  }
+  footerText?: string
+  primaryCtaLink?: string
+  secondaryCtaLink?: string
+  aboutContent?: string
+}
+

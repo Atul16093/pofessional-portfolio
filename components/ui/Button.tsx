@@ -13,6 +13,11 @@ interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
   isLoading?: boolean
   icon?: React.ReactNode
   iconPosition?: 'start' | 'end'
+  href?: string
+  target?: string
+  rel?: string
+  download?: boolean | string
+  component?: React.ElementType
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
