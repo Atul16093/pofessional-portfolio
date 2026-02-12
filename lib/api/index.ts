@@ -113,24 +113,29 @@ export const getProjects = async (): Promise<Project[]> => {
   }))
 }
 
-export const getProjectBySlug = async (slug: string): Promise<CaseStudy> => {
-  const response = await serverFetch<ApiResponse<any>>(`/public/projects/${slug}`, {
-    next: { revalidate: 6 } // 30 mins
-  })
-  
-  const item = response.data || response
+export const getProjectBySlug = async (slug: string): Promise<CaseStudy | null> => {
+  try {
+    const response = await serverFetch<ApiResponse<any>>(`/public/projects/${slug}`, {
+      next: { revalidate: 6 } // 30 mins
+    })
+    
+    const item = response.data || response
 
-  // Adapt backend detail to CaseStudy
-  // Note: Backend might not return full CaseStudy fields yet, providing best effort mapping
-  return {
-    id: item.id,
-    slug: item.slug,
-    title: item.title,
-    description: item.summary || '', // Required field
-    shortDescription: item.summary,
-    techStack: item.techStack,
-    project: item, // Link back to project if needed
-    // Defaults for missing required fields if any (CaseStudy interface seems to have many optionals)
+    // Adapt backend detail to CaseStudy
+    // Note: Backend might not return full CaseStudy fields yet, providing best effort mapping
+    return {
+      id: item.id,
+      slug: item.slug,
+      title: item.title,
+      description: item.summary || '', // Required field
+      shortDescription: item.summary,
+      techStack: item.techStack,
+      project: item, // Link back to project if needed
+      // Defaults for missing required fields if any (CaseStudy interface seems to have many optionals)
+    }
+  } catch (error) {
+    console.warn(`Error fetching project by slug "${slug}", returning null:`, error)
+    return null
   }
 }
 
