@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Environment variable for the backend API URL
 // In production, this should be set in Vercel/environment
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api'
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://portfolio-backend-render-3y7k.onrender.com/api'
 
 /**
  * Centralized Axios instance for client-side API calls.
@@ -27,7 +27,7 @@ apiClient.interceptors.response.use(
   (response) => {
     // Minimal logging for success
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[API] ${response.config.method?.toUpperCase()} ${response.url} - ${response.status}`)
+      console.log(`[API] ${response.config.method?.toUpperCase()} ${response.config.url} - ${response.status}`)
     }
     return response
   },
