@@ -38,9 +38,8 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
         <Container maxWidth="lg">
           <Stack spacing={{ xs: 3, md: 4 }}>
             {/* Back Link */}
-            <Link href="/projects" passHref legacyBehavior>
-              <MuiLink
-                component="a"
+            <Link href="/projects" style={{ textDecoration: 'none' }}>
+              <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
@@ -57,7 +56,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
               >
                 <ArrowBackIcon fontSize="small" />
                 Back to Projects
-              </MuiLink>
+              </Box>
             </Link>
 
             {/* Title and Description */}
@@ -444,9 +443,8 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
         }}
       >
         <Container maxWidth="md">
-          <Link href="/projects" passHref legacyBehavior>
-            <MuiLink
-              component="a"
+          <Link href="/projects" style={{ textDecoration: 'none' }}>
+            <Box
               sx={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -463,7 +461,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
             >
               <ArrowBackIcon fontSize="small" />
               Back to Projects
-            </MuiLink>
+            </Box>
           </Link>
         </Container>
       </Box>
