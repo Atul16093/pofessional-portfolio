@@ -1,16 +1,18 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { CaseStudyCard } from '@/components/cards/CaseStudyCard'
+// import { CaseStudyCard } from '@/components/cards/CaseStudyCard'
 import { getProjectBySlug, getSiteConfig } from '@/lib/api'
 import { Box, Container, Typography } from '@mui/material'
 import { designTokens } from '@/theme/muiTheme'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }) {
-  const { slug } = await params
+  const { slug } = params
   
   let caseStudy = null
   let siteConfig = null
@@ -30,38 +32,8 @@ export default async function ProjectDetailPage({
     return (
       <>
         <Header />
-        <Box
-          sx={{
-            minHeight: '60vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: designTokens.colors.backgroundPrimary,
-            py: 8,
-            px: 2,
-          }}
-        >
-          <Container maxWidth="md">
-            <Typography
-              variant="h3"
-              sx={{
-                color: designTokens.colors.accentHighlight,
-                textAlign: 'center',
-                mb: 2,
-              }}
-            >
-              {error || 'Project not found'}
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                color: designTokens.colors.secondaryText,
-                textAlign: 'center',
-              }}
-            >
-              Please go back to the projects page and try again.
-            </Typography>
-          </Container>
+        <Box sx={{ py: 8, textAlign: 'center' }}>
+            <Typography variant="h4">{error || 'Project not found'}</Typography>
         </Box>
         <Footer siteConfig={siteConfig || undefined} />
       </>
@@ -72,7 +44,11 @@ export default async function ProjectDetailPage({
     <>
       <Header />
       <main>
-        <CaseStudyCard caseStudy={caseStudy} />
+        <Container maxWidth="lg" sx={{ py: 8 }}>
+            <Typography variant="h3">{caseStudy.title}</Typography>
+            {/* <CaseStudyCard caseStudy={caseStudy} /> */}
+            <pre>{JSON.stringify(caseStudy, null, 2)}</pre>
+        </Container>
       </main>
       <Footer siteConfig={siteConfig || undefined} />
     </>

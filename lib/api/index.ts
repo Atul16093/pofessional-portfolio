@@ -8,7 +8,7 @@ import {
   SiteConfig
 } from '@/lib/types'
 import { apiClient, API_BASE_URL } from './client'
-import { OWNER_NAME, OWNER_TITLE, OWNER_SUMMARY } from '@/lib/constants'
+import { OWNER_NAME, OWNER_TITLE, OWNER_SUMMARY, SOCIAL_LINKS } from '@/lib/constants'
 
 // Generic API Response wrapper from backend
 interface ApiResponse<T> {
@@ -43,25 +43,44 @@ async function serverFetch<T>(
 
 // Site Config API
 export const getSiteConfig = async (): Promise<SiteConfig> => {
-  const response = await serverFetch<ApiResponse<any>>('/public/site-config', {
-    next: { revalidate: 60 } // 30 mins
-  })
-  console.dir(response, { depth: null })
-  
-  const data = response.data || response
+  try {
+    const response = await serverFetch<ApiResponse<any>>('/public/site-config', {
+      next: { revalidate: 60 } // 30 mins
+    })
+    console.dir(response, { depth: null })
+    
+    const data = response.data || response
 
-  // Adapt backend data to SiteConfig
-  return {
-    ownerName: data.ownerName || OWNER_NAME,
-    ownerTitle: data.heroTitle || OWNER_TITLE,
-    ownerSummary: data.heroDescription || OWNER_SUMMARY,
-    socialLinks: Array.isArray(data.socialLinks) ? data.socialLinks : [],
-    contactEmail: data.contactEmail,
-    seo: data.seo,
-    footerText: data.footerText,
-    primaryCtaLink: data.primaryCtaLink,
-    secondaryCtaLink: data.secondaryCtaLink,
-    aboutContent: data.aboutContent
+    // Adapt backend data to SiteConfig
+    return {
+      ownerName: data.ownerName || OWNER_NAME,
+      ownerTitle: data.heroTitle || OWNER_TITLE,
+      ownerSummary: data.heroDescription || OWNER_SUMMARY,
+      socialLinks: Array.isArray(data.socialLinks) ? data.socialLinks : [],
+      contactEmail: data.contactEmail,
+      seo: data.seo,
+      footerText: data.footerText,
+      primaryCtaLink: data.primaryCtaLink,
+      secondaryCtaLink: data.secondaryCtaLink,
+      aboutContent: data.aboutContent
+    }
+  } catch (error) {
+    console.warn("Error fetching site config, utilizing fallback defaults:", error)
+    
+    // Return default config from constants if API fails
+    return {
+      ownerName: OWNER_NAME,
+      ownerTitle: OWNER_TITLE,
+      ownerSummary: OWNER_SUMMARY,
+      socialLinks: SOCIAL_LINKS.map(link => ({
+        platform: link.label.toLowerCase(),
+        url: link.href
+      })),
+      contactEmail: 'hello@example.com',
+      footerText: `© ${new Date().getFullYear()} ${OWNER_NAME}. All rights reserved.`,
+      primaryCtaLink: '/contact',
+      secondaryCtaLink: '/resume.pdf' // Placeholder
+    }
   }
 }
 

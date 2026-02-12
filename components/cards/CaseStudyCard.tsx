@@ -103,6 +103,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
                 </Typography>
                 <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap', gap: 1 }}>
                   {caseStudy.techStack.map((tech) => {
+                    if (!tech.name) return null
                     const iconUrl = tech.iconUrl || tech.icon || getTechIconUrl(tech.name)
                     return (
                       <Chip
@@ -386,7 +387,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
                     mb: 3,
                   }}
                 >
-                  What I'd Improve Next
+                  What I&apos;d Improve Next
                 </Typography>
                 <Stack spacing={2}>
                   {caseStudy.improvements.map((improvement, index) => (

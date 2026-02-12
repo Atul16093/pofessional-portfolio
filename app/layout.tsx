@@ -1,7 +1,14 @@
 import type { Metadata, Viewport } from 'next'
+import { Roboto } from 'next/font/google'
 import { ThemeProviderWrapper } from '@/components/providers/ThemeProvider'
 import { OWNER_NAME, OWNER_TITLE } from '@/lib/constants'
 import '@/theme/styles.css'
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -29,14 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"
-          rel="preload"
-          as="style"
-        />
-      </head>
-      <body>
+      <body className={roboto.className}>
         <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
       </body>
     </html>
