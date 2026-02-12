@@ -65,7 +65,12 @@ export const getSiteConfig = async (): Promise<SiteConfig> => {
       aboutContent: data.aboutContent
     }
   } catch (error) {
-    console.warn("Error fetching site config, utilizing fallback defaults:", error)
+    // We'll log this as info rather than a warning because it's expected during initial setup
+    if (error instanceof Error && error.message.includes('404')) {
+      console.log("Site config not found (404), using default fallback configuration.")
+    } else {
+      console.warn("Error fetching site config, utilizing fallback defaults:", error)
+    }
     
     // Return default config from constants if API fails
     return {

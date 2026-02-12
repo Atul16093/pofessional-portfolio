@@ -36,10 +36,8 @@ export async function getAbout(): Promise<AboutData | null> {
   try {
     const url = `${API_BASE_URL}/public/about`
     
-    // Note: Request may not appear in browser Network tab as this happens 
     // strictly on the server (Server Component -> Backend).
     const response = await fetch(url, {
-      cache: 'force-cache',
       next: { revalidate: 3 } // Revalidate every hour (ISR)
     })
 
