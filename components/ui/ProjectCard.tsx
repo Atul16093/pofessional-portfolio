@@ -26,7 +26,36 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   variant = 'full',
   showFeatured = false,
 }) => {
+  const [isExpanded, setIsExpanded] = React.useState(false)
   const isCompact = variant === 'compact'
+  
+  // Typewriter effect logic
+  const fullText = project.shortDescription || ''
+  const [displayedText, setDisplayedText] = React.useState(fullText)
+
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timeout
+
+    if (isExpanded) {
+      setDisplayedText('') // Start from empty when expanding
+      let currentIndex = 0
+      
+      intervalId = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setDisplayedText(fullText.slice(0, currentIndex + 1))
+          currentIndex++
+        } else {
+          clearInterval(intervalId)
+        }
+      }, 15) // Speed of typing (ms)
+    } else {
+      setDisplayedText(fullText) // Reset to full text when collapsed (for clamping)
+    }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId)
+    }
+  }, [isExpanded, fullText])
 
   return (
       <Card
@@ -64,6 +93,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               transform: 'scaleX(1)',
             },
           },
+          ...(isExpanded && {
+            // When expanded, we might want to prevent the hover transform or adjust interactions
+            // For now, keeping standard hover effects but ensure content flow
+            height: 'auto', 
+            minHeight: '100%'
+          })
         }}
       >
           <CardContent
@@ -113,21 +148,30 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               
               {/* Subheading - Short Description */}
               {project.shortDescription && (
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: designTokens.colors.secondaryText,
-                    fontSize: isCompact ? '0.875rem' : '0.9rem',
-                    lineHeight: 1.5,
-                    mb: 1.5,
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
+                <Box 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsExpanded(!isExpanded);
                   }}
+                  sx={{ cursor: 'pointer' }}
                 >
-                  {project.shortDescription}
-                </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: designTokens.colors.secondaryText,
+                      fontSize: isCompact ? '0.875rem' : '0.9rem',
+                      lineHeight: 1.5,
+                      mb: 1.5,
+                      display: '-webkit-box',
+                      WebkitLineClamp: isExpanded ? 'unset' : 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    {displayedText}
+                  </Typography>
+                </Box>
               )}
             </Box>
 
@@ -152,7 +196,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   ? project.techStack 
                   : (project.tags || []).map(tag => ({ id: tag, name: tag, iconUrl: getTechIconUrl(tag) }))
                 )
-                .slice(0, isCompact ? 2 : 4)
+                .slice(0, isCompact ? 2 : 6)
                 .map((item) => {
                   // For techStack items, use iconUrl or fallback to utility
                   // For tags, we constructed an object with iconUrl from utility
