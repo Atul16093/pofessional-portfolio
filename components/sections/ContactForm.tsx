@@ -51,8 +51,15 @@ export function ContactForm() {
 
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required'
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters long'
+    } else {
+      const charCount = formData.message.trim().length
+      const wordCount = formData.message.trim().split(/\s+/).filter(Boolean).length
+
+      if (charCount < 10) {
+        newErrors.message = 'Message must be at least 10 characters long'
+      } else if (wordCount > 100) {
+        newErrors.message = `Message cannot exceed 100 words (currently ${wordCount} words)`
+      }
     }
 
     setErrors(newErrors)
@@ -101,12 +108,15 @@ export function ContactForm() {
       } else {
         setSubmitStatus('error')
         setSubmitMessage(
-          response.error || 'Failed to send your message. Please try again.'
+          response.message || response.error || 'Failed to send your message. Please try again.'
         )
       }
-    } catch (error) {
+    } catch (error: any) {
       setSubmitStatus('error')
-      setSubmitMessage('An error occurred. Please try again later.')
+      const errorMessage = error.response?.data?.message || 
+                         error.response?.data?.error || 
+                         'An error occurred. Please try again later.'
+      setSubmitMessage(errorMessage)
       console.error('Failed to submit form:', error)
     } finally {
       setLoading(false)
@@ -260,7 +270,10 @@ export function ContactForm() {
                 value={formData.message}
                 onChange={handleInputChange}
                 error={!!errors.message}
-                helperText={errors.message}
+                helperText={
+                  errors.message || 
+                  `${formData.message.trim().split(/\s+/).filter(Boolean).length}/100 words`
+                }
                 disabled={loading}
                 placeholder="Tell me about your project..."
                 sx={{
@@ -282,7 +295,9 @@ export function ContactForm() {
                     opacity: 0.7,
                   },
                   '& .MuiFormHelperText-root': {
-                    color: '#FF6B6B',
+                    color: errors.message ? '#FF6B6B' : designTokens.colors.secondaryText,
+                    textAlign: 'right',
+                    fontWeight: 500,
                   },
                 }}
               />
