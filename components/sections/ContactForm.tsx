@@ -92,9 +92,7 @@ export function ContactForm() {
 
       if (response.success) {
         setSubmitStatus('success')
-        setSubmitMessage(
-          response.message || 'Thank you! Your message has been sent successfully.'
-        )
+        setSubmitMessage('Thank you! Your message has been sent successfully')
         setFormData({
           name: '',
           email: '',
