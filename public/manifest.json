@@ -1,0 +1,21 @@
+{
+  "name": "Atul Raghuwanshi Portfolio",
+  "short_name": "Atul Portfolio",
+  "description": "Full-Stack Software Engineer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0F0F",
+  "theme_color": "#F36B7F",
+  "icons": [
+    {
+      "src": "/icon",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

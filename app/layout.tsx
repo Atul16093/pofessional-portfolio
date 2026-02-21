@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   title: `${OWNER_NAME} | ${OWNER_TITLE}`,
   description:
     'Full-Stack Software Engineer (Backend-Focused) specializing in scalable systems, real-time infrastructure, and high-performance solutions.',
+  manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     locale: 'en_US',
